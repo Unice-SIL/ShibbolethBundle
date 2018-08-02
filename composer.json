@@ -1,0 +1,27 @@
+{
+  "name" : "unicesil/shibboleth-bundle",
+  "description" : "Shibboleth bundle authentication for Symfony 3+",
+  "type" : "symfony-bundle",
+  "authors" : [{
+    "name" : "Frédéric Casazza",
+    "email" : "frederic.casazza@unice.fr"
+  }],
+  "keywords" : [
+    "Unice-SIL", "Unice", "UNS", "Shibboleth", "Authentication", "Symfony 3", "Guard Authenticator"
+  ],
+  "license" : [
+    "MIT"
+  ],
+  "require" : {
+  },
+  "autoload" : {
+    "psr-0" : {
+      "UniceSIL\\ShibbolethBundle" : ""
+    }
+  },
+  "target-dir" : "UniceSIL/ShibbolethBundle",
+  "repositories" : [{
+  }],
+  "extra" : {
+  }
+}

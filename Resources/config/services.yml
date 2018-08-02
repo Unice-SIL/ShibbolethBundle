@@ -1,0 +1,5 @@
+services:
+  shibboleth_authenticator:
+    class: ShibbolethBundle\Security\ShibbolethGuardAuthenticator
+    arguments: ['%shibboleth%', "@router", "@session", "@security.token_storage"]
+
