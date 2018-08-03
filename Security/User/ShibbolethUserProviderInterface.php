@@ -1,6 +1,6 @@
 <?php
 
-namespace ShibbolethBundle\Security\User;
+namespace UniceSIL\ShibbolethBundle\Security\User;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 

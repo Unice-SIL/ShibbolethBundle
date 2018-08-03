@@ -1,16 +1,15 @@
 <?php
 
-namespace ShibbolethBundle\Security;
+namespace UniceSIL\ShibbolethBundle\Security;
 
 
-use ShibbolethBundle\Security\User\ShibbolethUserProviderInterface;
+use UniceSIL\ShibbolethBundle\Security\User\ShibbolethUserProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -24,11 +23,11 @@ class ShibbolethGuardAuthenticator extends AbstractGuardAuthenticator
 
     private $config;
     private $router;
-    private $session;
     private $tokenStorage;
 
-    private $login_route;
-    private $target;
+    private $login_path;
+    private $logout_path;
+    private $login_target;
     private $session_id;
     private $username;
     private $attributes;
@@ -38,14 +37,14 @@ class ShibbolethGuardAuthenticator extends AbstractGuardAuthenticator
      * @param $config
      * @param Router $router
      */
-    public function __construct($config, Router $router, Session $session, TokenStorage $tokenStorage)
+    public function __construct($config, Router $router, TokenStorage $tokenStorage)
     {
         $this->config = $config;
         $this->router = $router;
-        $this->session = $session;
         $this->tokenStorage = $tokenStorage;
-        $this->login_route = $config['login_route'];
-        $this->target = $config['target'];
+        $this->login_path = $config['login_path'];
+        $this->logout_path = $config['logout_path'];
+        $this->login_target = $config['login_target'];
         $this->session_id = $config['session_id'];
         $this->username = $config['username'];
         $this->attributes = $config['attributes'];
@@ -71,8 +70,7 @@ class ShibbolethGuardAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $this->session->set('shibboleth.target', $request->getUri());
-        return new RedirectResponse($this->router->generate($this->login_route));
+        return new RedirectResponse("{$request->getSchemeAndHttpHost()}/".trim($this->login_path, '/')."?target=".(empty($this->login_target)? $request->getUri() : "{$request->getSchemeAndHttpHost()}{$this->router->generate($this->login_target)}"));
     }
 
     /**
@@ -136,8 +134,7 @@ class ShibbolethGuardAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if(!empty($this->target)) return new RedirectResponse($this->router->generate($this->target));
-        return new RedirectResponse($this->session->get('shibboleth.target'));
+        return null;
     }
 
     /**
