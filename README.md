@@ -25,10 +25,12 @@ public function registerBundles()
 Modify your config.yml file to add the shibboleth settings :
 ```yaml
 unice_sil_shibboleth:
-    login_path: 'Shibboleth.sso/Login'  # The path used to call Shibboleth authentication (default = 'Shibboleth.sso/Login')
+    login_path: 'Shibboleth.sso/Login'  # The path used to call Shibboleth login authentication (default = 'Shibboleth.sso/Login')
+    logout_path: 'Shibboleth.sso/Login'  # The path used to call Shibboleth logout (default = 'Shibboleth.sso/Logout')  
     username: 'eppn'  # The Shibboleth attribute that is used as username for the logged in user. The attribute must appear in the'attributes' parameter list (default = 'username')
     attributes: ['eppn', 'mail', 'givenName', 'sn']  # The list of attributes returned by Shibboleth Service Provider
-    target_route : ''  # The route to which the user will be redirected after authentication. If this parameter is not filled, the user will be redirected to the page from which he comes. (default = null)
+    login_target : ''  # The route to which the user will be redirected after login. If this parameter is not filled, the user will be redirected to the page from which he comes. (default = null)
+    logout_target : ''  # The route to which the user will be redirected after logout. If this parameter is not filled, the user will be redirected to the page from which he comes. (default = null)
 ```
 
 And modify your security.yml file to secure your application :
