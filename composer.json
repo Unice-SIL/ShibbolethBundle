@@ -20,10 +20,5 @@
   },
   "autoload": {
     "psr-4": { "UniceSIL\\ShibbolethBundle\\": "" }
-  },
-  "target-dir" : "UniceSil/ShibbolethBundle",
-  "repositories" : [{
-  }],
-  "extra" : {
   }
 }
