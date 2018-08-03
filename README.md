@@ -16,7 +16,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new UniceSIL\ShibbolethBundle\ShibbolethBundle(),
+        new UniceSIL\ShibbolethBundle\UniceSILShibbolethBundle(),
         // ...
     );
 }
