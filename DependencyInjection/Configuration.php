@@ -10,8 +10,10 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('unice_sil_shibboleth');
+        
+        $treeBuilder = new TreeBuilder('unice_sil_shibboleth');
+        // BC for symfony/config < 4.2
+        $rootNode = method_exists($builder, 'getRootNode') ? $builder->getRootNode() : $builder->root('unice_sil_shibboleth');
 
         $rootNode
             ->children()
