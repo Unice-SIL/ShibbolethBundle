@@ -17,15 +17,15 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('login_path')->defaultValue('Shibboleth.sso/Login')->end()
-            ->scalarNode('logout_path')->defaultValue('Shibboleth.sso/Logout')->end()
-            ->scalarNode('login_target')->defaultValue('')->end()
-            ->scalarNode('logout_target')->defaultValue('')->end()
-            ->scalarNode('session_id')->defaultValue('Shib-Session-ID')->end()
-            ->scalarNode('username')->defaultValue('username')->end()
-            ->arrayNode('attributes')
-            ->scalarPrototype()->end()
-            ->end()
+                ->scalarNode('login_path')->defaultValue('Shibboleth.sso/Login')->end()
+                ->scalarNode('logout_path')->defaultValue('Shibboleth.sso/Logout')->end()
+                ->scalarNode('login_target')->defaultValue('')->end()
+                ->scalarNode('logout_target')->defaultValue('')->end()
+                ->scalarNode('session_id')->defaultValue('Shib-Session-ID')->end()
+                ->scalarNode('username')->defaultValue('username')->end()
+                ->arrayNode('attributes')
+                    ->scalarPrototype()->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
