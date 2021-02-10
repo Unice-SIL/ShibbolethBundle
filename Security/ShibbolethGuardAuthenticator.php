@@ -2,42 +2,80 @@
 
 namespace UniceSIL\ShibbolethBundle\Security;
 
-
-use UniceSIL\ShibbolethBundle\Security\User\ShibbolethUserProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use UniceSIL\ShibbolethBundle\Security\User\ShibbolethUserProviderInterface;
 
+/**
+ * Class ShibbolethGuardAuthenticator
+ * @package UniceSIL\ShibbolethBundle\Security
+ */
 class ShibbolethGuardAuthenticator extends AbstractGuardAuthenticator
 {
 
+    /**
+     * @var array
+     */
     private $config;
+
+    /**
+     * @var Router
+     */
     private $router;
+
+    /**
+     * @var TokenStorageInterface
+     */
     private $tokenStorage;
 
+    /**
+     * @var string
+     */
     private $login_path;
+
+    /**
+     * @var string
+     */
     private $logout_path;
+
+    /**
+     * @var string
+     */
     private $login_target;
+
+    /**
+     * @var string
+     */
     private $session_id;
+
+    /**
+     * @var string
+     */
     private $username;
+
+    /**
+     * @var array
+     */
     private $attributes;
 
     /**
      * ShibbolethGuardAuthenticator constructor.
-     * @param $config
+     * @param array $config
      * @param Router $router
+     * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct($config, Router $router, TokenStorage $tokenStorage)
+    public function __construct(array $config, Router $router, TokenStorageInterface $tokenStorage)
     {
         $this->config = $config;
         $this->router = $router;
@@ -57,10 +95,10 @@ class ShibbolethGuardAuthenticator extends AbstractGuardAuthenticator
      * @return bool
      */
     public function supports(Request $request){
-        if (!empty($this->tokenStorage->getToken()) && $this->tokenStorage->getToken()->getUser()) {
-            return false;
+        if (!empty($this->getAttribute($request, $this->session_id))) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -79,8 +117,6 @@ class ShibbolethGuardAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if(empty($this->getAttribute($request, $this->session_id)))
-            return null;
         $credentials = array();
         $credentials['username'] = $this->getAttribute($request, $this->username);
         foreach($this->attributes as $attribute){
