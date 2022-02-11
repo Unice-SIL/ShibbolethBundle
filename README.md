@@ -7,22 +7,17 @@ Install bundle via composer by running the following command :
 composer require unicesil/shibboleth-bundle
 ```
 
-Enable the bundle in app/AppKernel.php :
+If you don't use flex, enable the bundle in config/bundles.php :
 ```php
 <?php
-// app/AppKernel.php
 
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-        new UniceSIL\ShibbolethBundle\UniceSILShibbolethBundle(),
-        // ...
-    );
-}
+return [
+    //...
+    UniceSIL\ShibbolethBundle\UniceSILShibbolethBundle::class => ['all' => true]
+];
 ```
 
-Modify your config.yml file to add the shibboleth settings :
+Modify the file config/packages/unice_sil_shibboleth.yaml to add your shibboleth settings :
 ```yaml
 unice_sil_shibboleth:
     login_path: 'Shibboleth.sso/Login'  # The path used to call Shibboleth login authentication (default = 'Shibboleth.sso/Login')
@@ -36,16 +31,22 @@ unice_sil_shibboleth:
 And modify your security.yml file to secure your application :
 ```yaml
 security:
+    enable_authenticator_manager: true
+    
+    provider:
+      shibboleth:
+        id: Your\Shibboleth\User\Provider\Class
+    
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            anonymous: ~
+        shibboleth:
+            lazy: true
+            provider: shibboleth
+            custom_authenticators:
+              - unicesil.shibboleth_authenticator
             logout: ~
-            guard:
-              authenticators:
-                - unicesil.shibboleth_authenticator
 
     access_control:
         - { path: ^/, roles: ROLE_USER }
@@ -65,41 +66,31 @@ Create your own User and UserProvider classes
 
 ### User
 ```php
-namespace MyBundle\Security\User;
 
-class User implements UserInterface
+class User extends UserInterface
 {
-...
+    //...
+
+    public function getUserIdentifier() {
+        // ...
+    }
+    
 }
 ```
 
 ### UserProvider
+
 ```php
-namespace MyBundle\Security\User;
 
-use UniceSIL\ShibbolethBundle\Security\User\ShibbolethUserProviderInterface;
+use UniceSIL\ShibbolethBundle\Security\Provider\AbstractShibbolethUserProvider;
 
-class MyShibbolethUserProvider extends ShibbolethUserProviderInterface
+class MyShibbolethUserProvider extends AbstractShibbolethUserProvider
 {
-    public function loadUser(array $credentials)
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $user = new User();
-        $user->setMail($credentials['mail']);
-        ...
-        return $user;
-    }
-    
-    public function refreshUser(UserInterface $user)
-    {
-        return $user;
+        $shibbolethUserAttributes = $this->getAttributes();
+        
+        // Return an instance of User
     }
 }
-```
-
-Add your provider to the security.yml file
-```php
-security:
-    providers:
-        shibboleth:
-            id: MyBundle\Security\User\MyShibbolethUserProvider
 ```
