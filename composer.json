@@ -15,7 +15,7 @@
   "require" : {
     "php": ">=7.2.5",
     "symfony/security-bundle": "^5.4",
-    "symfony/routing": "5.4"
+    "symfony/routing": "^5.4"
   },
   "autoload": {
     "psr-4": { "UniceSIL\\ShibbolethBundle\\": "" }
