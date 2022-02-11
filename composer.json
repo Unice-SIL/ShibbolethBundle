@@ -13,9 +13,9 @@
     "MIT"
   ],
   "require" : {
-    "php": "^5.5.9|>=7.0.8",
-    "symfony/framework-bundle": "~4.4",
-    "symfony/security-guard": "~4.4"
+    "php": ">=7.2.5",
+    "symfony/security-bundle": "^5.4",
+    "symfony/routing": "5.4"
   },
   "autoload": {
     "psr-4": { "UniceSIL\\ShibbolethBundle\\": "" }
