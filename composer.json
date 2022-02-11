@@ -1,13 +1,13 @@
 {
   "name" : "unicesil/shibboleth-bundle",
-  "description" : "Shibboleth bundle authentication for Symfony 3+ or 4+",
+  "description" : "Shibboleth bundle authentication for Symfony 5+",
   "type" : "symfony-bundle",
   "authors" : [{
     "name" : "Frédéric Casazza",
     "email" : "frederic.casazza@unice.fr"
   }],
   "keywords" : [
-    "Unice-SIL", "Unice", "UNS", "Shibboleth", "Authentication", "Symfony 3", "Symfony 4", "Guard Authenticator"
+    "Unice-SIL", "Unice", "UNS", "Shibboleth", "Authentication", "Symfony 5"
   ],
   "license" : [
     "MIT"
