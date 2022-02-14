@@ -25,7 +25,7 @@ abstract class AbstractShibbolethUserProvider implements UserProviderInterface
     /**
      * @return array
      */
-    private function getAttributes(): array {
+    protected function getAttributes(): array {
         return $this->session->get(ShibbolethAuthenticator::SESSION_SHIBBOLETH_USER_ATTRIBUTES, []);
     }
 }
