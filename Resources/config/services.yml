@@ -1,8 +1,10 @@
 services:
   unicesil.shibboleth_authenticator:
-    class: UniceSIL\ShibbolethBundle\Security\ShibbolethGuardAuthenticator
-    arguments: ['%unice_sil_shibboleth%', "@router", "@security.token_storage"]
+    class: UniceSIL\ShibbolethBundle\Security\Authenticator\ShibbolethAuthenticator
+    arguments: ['%unice_sil_shibboleth%', "@router"]
 
   unicesil.shibboleth_logout_event:
-    class: UniceSIL\ShibbolethBundle\Event\LogoutSuccessHandler
+    class: UniceSIL\ShibbolethBundle\EventListener\LogoutEventListener
     arguments: ['%unice_sil_shibboleth%', "@router"]
+    tags:
+      - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\LogoutEvent }
