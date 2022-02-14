@@ -5,7 +5,7 @@ namespace UniceSIL\ShibbolethBundle\Security\Provider;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use UniceSIL\ShibbolethBundle\Security\ShibbolethAuthenticator;
+use UniceSIL\ShibbolethBundle\Security\Authenticator\ShibbolethAuthenticator;
 
 abstract class AbstractShibbolethUserProvider implements UserProviderInterface
 {
@@ -25,7 +25,7 @@ abstract class AbstractShibbolethUserProvider implements UserProviderInterface
     /**
      * @return array
      */
-    private function getAttributes(): array {
+    protected function getAttributes(): array {
         return $this->session->get(ShibbolethAuthenticator::SESSION_SHIBBOLETH_USER_ATTRIBUTES, []);
     }
 }
