@@ -5,7 +5,7 @@ namespace UniceSIL\ShibbolethBundle\Security\Provider;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use UniceSIL\ShibbolethBundle\Security\ShibbolethAuthenticator;
+use UniceSIL\ShibbolethBundle\Security\Authenticator\ShibbolethAuthenticator;
 
 abstract class AbstractShibbolethUserProvider implements UserProviderInterface
 {
