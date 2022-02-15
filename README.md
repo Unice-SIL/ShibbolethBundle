@@ -21,7 +21,7 @@ Modify the file config/packages/unice_sil_shibboleth.yaml to add your shibboleth
 ```yaml
 unice_sil_shibboleth:
     login_path: 'Shibboleth.sso/Login'  # The path used to call Shibboleth login authentication (default = 'Shibboleth.sso/Login')
-    logout_path: 'Shibboleth.sso/Login'  # The path used to call Shibboleth logout (default = 'Shibboleth.sso/Logout')  
+    logout_path: 'Shibboleth.sso/Logout'  # The path used to call Shibboleth logout (default = 'Shibboleth.sso/Logout')  
     username: 'eppn'  # The Shibboleth attribute that is used as username for the logged in user. The attribute must appear in the'attributes' parameter list (default = 'username')
     attributes: ['eppn', 'mail', 'givenName', 'sn']  # The list of attributes returned by Shibboleth Service Provider
     login_target : ''  # The route to which the user will be redirected after login. If this parameter is not filled, the user will be redirected to the page from which he comes. (default = null)
@@ -93,4 +93,18 @@ class MyShibbolethUserProvider extends AbstractShibbolethUserProvider
         // Return an instance of User
     }
 }
+```
+
+## Logout
+
+to properly disconnect your users from the application via Shibboleth, configure the listener as follows in the service.yaml file
+```yaml
+unicesil.shibboleth_logout_event:
+    class: UniceSIL\ShibbolethBundle\EventListener\LogoutEventListener
+    arguments: ['%unice_sil_shibboleth%', "@router"]
+    tags:
+        - name: 'kernel.event_listener'
+          event: 'Symfony\Component\Security\Http\Event\LogoutEvent'
+          method: onLogout
+          dispatcher: security.event_dispatcher.{YOUR_FIREWALL_NAME} # ex: security.event_dispatcher.main
 ```
