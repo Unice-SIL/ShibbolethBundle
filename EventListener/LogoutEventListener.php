@@ -38,7 +38,7 @@ class LogoutEventListener
     {
         $request = $event->getRequest();
         $target = empty($this->target) ? $request->getUri() : $request->getSchemeAndHttpHost() . $this->router->generate($this->target);
-        $url = $request->getSchemeAndHttpHost() . '/' . $this->path . '?target' . $target;
+        $url = $request->getSchemeAndHttpHost() . '/' . $this->path . '?target=' . $target;
         $event->setResponse(new RedirectResponse($url));
     }
 }
