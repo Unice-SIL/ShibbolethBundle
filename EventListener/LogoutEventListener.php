@@ -33,13 +33,12 @@ class LogoutEventListener
 
     /**
      * @param LogoutEvent $event
-     * @return RedirectResponse
      */
-    public function onLogout(LogoutEvent $event): RedirectResponse
+    public function onLogout(LogoutEvent $event)
     {
         $request = $event->getRequest();
         $target = empty($this->target) ? $request->getUri() : $request->getSchemeAndHttpHost() . $this->router->generate($this->target);
-        $url = $request->getSchemeAndHttpHost() . $this->path . '?target' . $target;
-        return new RedirectResponse($url);
+        $url = $request->getSchemeAndHttpHost() . '/' . $this->path . '?target' . $target;
+        $event->setResponse(new RedirectResponse($url));
     }
 }
