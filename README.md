@@ -97,7 +97,7 @@ class MyShibbolethUserProvider extends AbstractShibbolethUserProvider
 
 ## Logout
 
-to properly disconnect your users from the application via Shibboleth, configure the listener as follows in the service.yaml file
+to properly disconnect your users from the application via Shibboleth, configure the listener as follows in the service.yaml file.
 ```yaml
 unicesil.shibboleth_logout_event:
     class: UniceSIL\ShibbolethBundle\EventListener\LogoutEventListener
@@ -107,4 +107,19 @@ unicesil.shibboleth_logout_event:
           event: 'Symfony\Component\Security\Http\Event\LogoutEvent'
           method: onLogout
           dispatcher: security.event_dispatcher.{YOUR_FIREWALL_NAME} # ex: security.event_dispatcher.main
+```
+
+Configure the logout route in security.yaml.
+```yaml
+security:
+    firewalls:
+        shibboleth:
+            logout:
+              path: /logout
+```
+
+Don't forgot to declare the logout route in your route configuration file.
+```yaml
+logout:
+    path: /logout
 ```
