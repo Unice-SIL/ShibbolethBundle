@@ -7,15 +7,15 @@
     "email" : "frederic.casazza@unice.fr"
   }],
   "keywords" : [
-    "Unice-SIL", "Unice", "UNS", "Shibboleth", "Authentication", "Symfony 5"
+    "Unice-SIL", "Unice", "UNS", "Shibboleth", "Authentication", "Symfony 5", "Symfony 6"
   ],
   "license" : [
     "MIT"
   ],
   "require" : {
-    "php": ">=7.2.5",
-    "symfony/security-bundle": "^5.4",
-    "symfony/routing": "^5.4"
+    "php": ">=8.1",
+    "symfony/security-bundle": "^6.4",
+    "symfony/routing": "^6.4"
   },
   "autoload": {
     "psr-4": { "UniceSIL\\ShibbolethBundle\\": "" }

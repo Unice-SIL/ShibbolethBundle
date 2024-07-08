@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -20,48 +21,48 @@ class ShibbolethAuthenticator extends AbstractAuthenticator implements Authentic
     public const SESSION_SHIBBOLETH_USER_ATTRIBUTES = 'shibboleth.user_attributes';
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
-    private $router;
+    private RouterInterface $router;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $loginPath;
+    private ?string $loginPath;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $loginTarget;
+    private ?string $loginTarget;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $sessionId;
+    private ?string $sessionId;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $username;
+    private ?string $username;
 
     /**
      * @var array
      */
-    private $attributes;
+    private array $attributes;
 
     /**
      * ShibbolethGuardAuthenticator constructor.
      * @param array $config
      * @param Router $router
      */
-    public function __construct(array $config, Router $router)
+    public function __construct(array $config, RouterInterface $router)
     {
         $this->router = $router;
-        $this->loginPath = $config['login_path'];
-        $this->loginTarget = $config['login_target'];
-        $this->sessionId = $config['session_id'];
-        $this->username = $config['username'];
-        $this->attributes = $config['attributes'];
+        $this->loginPath = $config['login_path'] ?? null;
+        $this->loginTarget = $config['login_target'] ?? null;
+        $this->sessionId = $config['session_id'] ?? null;
+        $this->username = $config['username'] ?? null;
+        $this->attributes = $config['attributes'] ?? [];
         if (!in_array($this->username, $this->attributes)) {
             throw new InvalidConfigurationException(
                 'Shibboleth configuration error : the value of username parameter must be in attributes list parameter'

@@ -12,7 +12,7 @@ abstract class AbstractShibbolethUserProvider implements UserProviderInterface
     /**
      * @var SessionInterface
      */
-    private $session;
+    private SessionInterface $session;
 
     /**
      * @param RequestStack $requestStack
