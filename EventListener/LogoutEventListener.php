@@ -11,17 +11,17 @@ class LogoutEventListener
     /**
      * @var string|null
      */
-    private $path;
+    private ?string $path;
 
     /**
      * @var string|null
      */
-    private $target;
+    private ?string $target;
 
     /**
      * @var RouterInterface
      */
-    private $router;
+    private RouterInterface $router;
 
     public function __construct($config, RouterInterface $router)
     {
