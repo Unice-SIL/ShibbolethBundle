@@ -75,7 +75,7 @@ class ShibbolethAuthenticator extends AbstractAuthenticator implements Authentic
      * @param AuthenticationException|null $authException
      * @return RedirectResponse
      */
-    public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
+    public function start(Request $request, ?AuthenticationException $authException = null): RedirectResponse
     {
         return new RedirectResponse(
             $request->getSchemeAndHttpHost() . '/' .

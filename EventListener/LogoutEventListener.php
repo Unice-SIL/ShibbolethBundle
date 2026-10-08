@@ -34,7 +34,7 @@ class LogoutEventListener
     /**
      * @param LogoutEvent $event
      */
-    public function onLogout(LogoutEvent $event)
+    public function onLogout(LogoutEvent $event): void
     {
         $request = $event->getRequest();
         $target = empty($this->target) ? $request->getUri() : $request->getSchemeAndHttpHost() . $this->router->generate($this->target);

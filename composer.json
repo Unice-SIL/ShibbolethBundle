@@ -1,21 +1,21 @@
 {
   "name" : "unicesil/shibboleth-bundle",
-  "description" : "Shibboleth bundle authentication for Symfony 5+",
+  "description" : "Shibboleth bundle authentication for Symfony 6.4 and 7.4",
   "type" : "symfony-bundle",
   "authors" : [{
     "name" : "Frédéric Casazza",
     "email" : "frederic.casazza@unice.fr"
   }],
   "keywords" : [
-    "Unice-SIL", "Unice", "UNS", "Shibboleth", "Authentication", "Symfony 5", "Symfony 6"
+    "Unice-SIL", "Unice", "UNS", "Shibboleth", "Authentication", "Symfony 6", "Symfony 7"
   ],
   "license" : [
     "MIT"
   ],
   "require" : {
     "php": ">=8.1",
-    "symfony/security-bundle": "^6.4",
-    "symfony/routing": "^6.4"
+    "symfony/security-bundle": "^6.4 || ^7.4",
+    "symfony/routing": "^6.4 || ^7.4"
   },
   "autoload": {
     "psr-4": { "UniceSIL\\ShibbolethBundle\\": "" }
